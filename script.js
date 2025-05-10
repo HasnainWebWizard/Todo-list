@@ -59,6 +59,7 @@ function add_list(textFromStorage = null, doneFromStorage = false) {
   delbtn.onclick = () => {
     newli.remove();
     saveTasks();
+    taskscounter();
     showPopup('remove-popup'); // Show "Task Removed" popup
   };
 
@@ -75,7 +76,16 @@ function add_list(textFromStorage = null, doneFromStorage = false) {
   newcheckbox.onclick = () => {
     newh1.style.textDecoration = newcheckbox.checked ? 'line-through' : 'none';
     saveTasks();
+    taskscounter();
   };
 
   saveTasks();
+  taskscounter();
 }
+
+function taskscounter() {
+  let taskcounter = document.querySelector('#taskcounter');
+  let taskItems = document.querySelectorAll('#list li');
+  taskcounter.textContent = taskItems.length - 1;
+}
+taskscounter();
