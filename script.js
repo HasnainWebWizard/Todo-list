@@ -6,10 +6,11 @@ window.onload = () => {
   let saved = JSON.parse(localStorage.getItem('tasks')) || [];
   if (saved.length > 0) {
     let defaultBox = document.querySelector('#box');
-    if (defaultBox) defaultBox.remove();
+    if (defaultBox) defaultBox.remove(); // Remove the default task if there are saved tasks
 
-    saved.forEach(task => add_list(task.text, task.done));
+    saved.forEach(task => add_list(task.text, task.done)); // Add saved tasks
   }
+  taskscounter(); // Ensure task counter is updated on page load
 };
 
 function saveTasks() {
@@ -86,6 +87,30 @@ function add_list(textFromStorage = null, doneFromStorage = false) {
 function taskscounter() {
   let taskcounter = document.querySelector('#taskcounter');
   let taskItems = document.querySelectorAll('#list li');
-  taskcounter.textContent = taskItems.length - 1;
+  let totalTasks = taskItems.length;
+
+  // Check if the default task is still there
+  const defaultTask = document.querySelector('#box');
+  if (defaultTask) {
+    totalTasks -= 1; // Don't count the default task
+  }
+
+  taskcounter.textContent = totalTasks;
 }
-taskscounter();
+
+// Ensure the default task checkbox works properly
+const defaultTaskCheckbox = document.querySelector('#box_check');
+const defaultTaskText = document.querySelector('#box_h1');
+if (defaultTaskCheckbox) {
+  defaultTaskCheckbox.addEventListener('click', () => {
+    if (defaultTaskCheckbox.checked) {
+      defaultTaskText.style.textDecoration = 'line-through';
+    } else {
+      defaultTaskText.style.textDecoration = 'none';
+    }
+    saveTasks(); // Save the state of tasks
+    taskscounter(); // Update task counter
+  });
+}
+
+taskscounter(); // Initial task counter update
