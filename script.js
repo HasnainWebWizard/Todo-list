@@ -27,6 +27,11 @@ function saveTasks() {
 
 // 3. Add a new task (or rehydrate one from storage)
 function add_list(textFromStorage = null, doneFromStorage = false) {
+  // Alert if empty input and not loading from storage
+  if (textFromStorage === null && input.value.trim() === '') {
+    alert('Please enter a task.');
+    return;
+  }
   // Create the <li>
   const newli = document.createElement('li');
   newli.className = "flex flex-wrap items-center h-auto w-[100%] my-1 py-3 shadow shadow-gray-200 bg-[white]";
