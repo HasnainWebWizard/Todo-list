@@ -113,4 +113,13 @@ if (defaultTaskCheckbox) {
   });
 }
 
+// Remove default task when clicked
+function removebox() {
+  const defaultTask = document.querySelector('#box');
+  if (defaultTask) {
+    defaultTask.remove();
+    taskscounter(); // Update task counter after removal
+  }
+}
+
 taskscounter(); // Initial task counter update
